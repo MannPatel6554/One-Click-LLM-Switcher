@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <title>LLM Switcher</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 260px;
+      background: #0f0f13;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .logo {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #6c63ff, #00d4ff);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: #e0e0e0; }
+    
+    #detectedTitle { font-size: 11px; font-weight: bold; margin-top: 2px; }
+    .color-claude { color: #c96b3a; }
+    .color-perplexity { color: #7c3aed; }
+    .color-error { color: #ff5555; }
+
+    .status-bar {
+      background: #1a1a22;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: #888;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #444;
+      flex-shrink: 0;
+    }
+    .status-dot.active { background: #00d4aa; box-shadow: 0 0 6px #00d4aa88; }
+    .status-dot.error  { background: #ff5555; }
+
+    .label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #555;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 6px;
+      padding: 9px 12px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.1s, box-shadow 0.2s;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover  { transform: translateX(2px); opacity: 0.92; }
+    .btn:active { transform: scale(0.97); }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn.hidden-btn { display: none; }
+
+    .btn .icon { font-size: 16px; width: 20px; text-align: center; }
+    .btn .arrow { margin-left: auto; opacity: 0.6; font-size: 11px; }
+
+    .claude   { background: linear-gradient(135deg, #c96b3a, #a3512a); }
+    .perplexity { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+    .copy-btn { background: linear-gradient(135deg, #6c63ff, #4b40ff); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(108, 99, 255, 0.2); }
+
+    .divider {
+      height: 1px;
+      background: #1e1e28;
+      margin: 10px 0;
+    }
+
+    .history-text {
+      font-size: 9px;
+      color: #888;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .footer {
+      font-size: 9px;
+      color: #3a3a4a;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .spinner {
+      display: none;
+      width: 10px; height: 10px;
+      border: 2px solid #444;
+      border-top-color: #00d4ff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-left: auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .btn.loading .spinner { display: block; }
+    .btn.loading .arrow   { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">⚡</div>
+    <div>
+      <div class="title">LLM SWITCHER</div>
+      <div id="detectedTitle" class="">Detecting...</div>
+    </div>
+  </div>
+
+  <div class="status-bar" id="statusBar">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Current page check ho raha hai…</span>
+  </div>
+
+  <button class="btn copy-btn" id="copyChatBtn">
+    <span class="icon">📋</span> Copy Current Chat
+    <span class="arrow">✓</span>
+    <div class="spinner"></div>
+  </button>
+
+  <div class="divider"></div>
+
+  <div class="label">Continue chat in →</div>
+
+  <button class="btn claude" id="toClaude">
+    <span class="icon">◆</span> Claude
+    <span class="arrow">→</span>
+    <div class="spinner"></div>
+  </button>
+  
+  <button class="btn perplexity" id="toPerplexity">
+    <span class="icon">🔍</span> Perplexity
+    <span class="arrow">→</span>
+    <div class="spinner"></div>
+  </button>
+
+  <div class="divider"></div>
+
+  <div class="history-text" id="historyText"></div>
+
+  <div class="footer">⚡ Zero server · 100% browser-side</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

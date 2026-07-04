@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One-Click LLM Switcher — Claude ↔ Perplexity</title>
+  <meta name="description" content="Instantly transfer your active AI conversations between Claude and Perplexity with a single click. Zero servers, 100% secure." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #07070a;
+      --surface: #0e0e14;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      
+      /* Platform Colors */
+      --claude: #c96b3a;
+      --perplexity: #7c3aed;
+      --gradient: linear-gradient(135deg, #c96b3a, #7c3aed);
+      
+      --radius: 16px;
+      --font-disp: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-disp);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Ambient Glow Effects */
+    .glow {
+      position: absolute;
+      width: 40vw; height: 40vw;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: 0;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .glow-claude {
+      background: var(--claude);
+      top: -10vw; left: -10vw;
+    }
+    .glow-perp {
+      background: var(--perplexity);
+      top: 20vw; right: -10vw;
+    }
+
+    /* Header/Navbar */
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 70px;
+      background: rgba(7, 7, 10, 0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 8vw;
+      z-index: 1000;
+    }
+    .logo {
+      font-weight: 700; font-size: 20px;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none; color: var(--text);
+    }
+    .logo span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--gradient);
+      padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      text-decoration: none; color: white; transition: transform 0.2s;
+    }
+    .nav-cta:hover { transform: scale(1.03); }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 180px 8vw 100px 8vw;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .badge {
+      background: rgba(199, 107, 58, 0.1);
+      border: 1px solid rgba(199, 107, 58, 0.2);
+      color: #c96b3a;
+      padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+    h1 {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800; line-height: 1.1; max-width: 900px;
+      margin-bottom: 20px; letter-spacing: -1px;
+    }
+    h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      color: var(--muted); font-size: clamp(16px, 2vw, 19px); max-width: 600px;
+      margin-bottom: 40px;
+    }
+    .hero-ctas { display: flex; gap: 16px; }
+    .btn {
+      padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 600;
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: all 0.3s;
+    }
+    .btn-primary { background: var(--gradient); color: white; border: none; }
+    .btn-primary:hover { box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4); transform: translateY(-2px); }
+    .btn-secondary { background: rgba(255,255,255,0.04); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+    /* Interactive Demo Interface Preview */
+    .demo-preview {
+      width: 100%; max-width: 800px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px; margin-top: 60px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .window-header {
+      display: flex; gap: 6px; margin-bottom: 20px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+    .demo-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .demo-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .demo-logo { font-size: 32px; margin-bottom: 12px; }
+    .demo-card.claude { border-color: rgba(199, 107, 58, 0.3); }
+    .demo-card.perplexity { border-color: rgba(124, 58, 237, 0.3); }
+    
+    .switch-icon {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px; height: 44px;
+      background: #1e1e2d;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      animation: bounce 2s infinite ease-in-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 20px rgba(108, 99, 255, 0.3); }
+    }
+
+    /* Steps Section */
+    .steps {
+      padding: 100px 8vw;
+      background: rgba(255,255,255,0.01);
+      position: relative;
+    }
+    .steps-container {
+      max-width: 1000px; margin: 0 auto;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px); font-weight: 800; text-align: center; margin-bottom: 60px;
+    }
+    .step-list {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px;
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+      position: relative;
+    }
+    .step-num {
+      position: absolute; top: -20px; left: 32px;
+      background: var(--gradient);
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; border: 4px solid var(--bg);
+    }
+    .step-card h3 { font-size: 18px; margin: 15px 0 10px 0; }
+    .step-card p { color: var(--muted); font-size: 14px; }
+
+    /* FAQ section */
+    .faq { padding: 100px 8vw; }
+    .faq-container { max-width: 700px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    .faq-item h3 { font-size: 18px; margin-bottom: 10px; font-weight: 600; }
+    .faq-item p { color: var(--muted); font-size: 14px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 8vw; display: flex; justify-content: space-between;
+      color: var(--muted); font-size: 14px;
+    }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { color: var(--muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <div class="glow glow-claude"></div>
+  <div class="glow glow-perp"></div>
+
+  <header>
+    <a href="#" class="logo">⚡ <span>LLM Switcher</span></a>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#setup">Setup Guide</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="llm-switcher-extension.zip" class="nav-cta">Download v1.1.0</a>
+  </header>
+
+  <section class="hero">
+    <div class="badge">v1.1.0 (Claude & Perplexity support)</div>
+    <h1>One-Click Chat Switching between <br/><span>Claude & Perplexity</span></h1>
+    <p class="hero-desc">
+      Stop manual copy-pasting. Seamlessly transfer active conversation logs between Claude.ai and Perplexity.ai in a single click. 100% secure.
+    </p>
+    <div class="hero-ctas">
+      <a href="llm-switcher-extension.zip" class="btn btn-primary">Download Extension (.zip)</a>
+      <a href="#setup" class="btn btn-secondary">Installation Guide</a>
+    </div>
+
+    <!-- UI Preview -->
+    <div class="demo-preview">
+      <div class="window-header">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="demo-grid">
+        <div class="demo-card claude">
+          <div class="demo-logo">◆</div>
+          <h3>Claude</h3>
+          <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">Scraped instantly</p>
+        </div>
+        <div class="demo-card perplexity">
+          <div class="demo-logo">🔍</div>
+          <h3>Perplexity</h3>
+          <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">Injected automatically</p>
+        </div>
+      </div>
+      <div class="switch-icon">⚡</div>
+    </div>
+  </section>
+
+  <section class="steps" id="how-it-works">
+    <div class="steps-container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Click Switch</h3>
+          <p>Open the extension popup on any active Claude or Perplexity conversation and choose your target.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Auto-Copy</h3>
+          <p>The entire conversation flow is scraped and securely copied to your clipboard instantly.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Auto-Paste</h3>
+          <p>A new tab opens, and the conversation is injected directly into the prompt box. Just press enter!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps" id="setup" style="background: transparent;">
+    <div class="steps-container">
+      <h2 class="section-title">2-Minute Setup</h2>
+      <div class="step-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <h3>Download ZIP</h3>
+          <p>Download the extension source package and extract it to a folder on your system.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <h3>Developer Mode</h3>
+          <p>Go to <code>chrome://extensions</code> in your browser and enable the <strong>"Developer mode"</strong> toggle.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <h3>Load Unpacked</h3>
+          <p>Click on <strong>"Load unpacked"</strong> and select the extracted <code>extension</code> folder. Ready to go!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="faq-container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <h3>Is my data secure?</h3>
+        <p>Yes. The extension is 100% serverless. Conversation logs never leave your browser memory and are handled locally inside your extension storage.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What if auto-paste fails?</h3>
+        <p>We copy the chat history to your clipboard automatically. If the site blocks automatic paste, simply click the text field and press Ctrl+V.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why only Claude and Perplexity?</h3>
+        <p>We optimized support for these platforms because they are the most popular for deep text generation and search contexts. Support is highly stable.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>⚡ Zero server cost · Powered by Vanilla JS</div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/yourname/llm-switcher" target="_blank">GitHub</a></li>
+      <li><a href="#how-it-works">Docs</a></li>
+    </ul>
+  </footer>
+
+</body>
+</html>
