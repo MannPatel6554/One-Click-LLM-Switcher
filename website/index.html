@@ -141,7 +141,7 @@
     }
     .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); }
     .demo-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px;
     }
     .demo-card {
       background: rgba(255,255,255,0.02);
@@ -154,6 +154,7 @@
     .demo-card.perplexity { border-color: rgba(124, 58, 237, 0.3); }
     .demo-card.gemini { border-color: rgba(26, 115, 232, 0.3); }
     .demo-card.grok { border-color: rgba(255, 255, 255, 0.2); }
+    .demo-card.chatgpt { border-color: rgba(16, 163, 127, 0.3); }
     
     .switch-icon {
       position: absolute; top: 50%; left: 50%;
@@ -241,10 +242,10 @@
   </header>
 
   <section class="hero">
-    <div class="badge">v1.2.0 (Claude, Perplexity, Gemini & Grok)</div>
-    <h1>One-Click Chat Switching between <br/><span>Claude, Perplexity, Gemini & Grok</span></h1>
+    <div class="badge">v1.2.0 (Claude, ChatGPT, Gemini, Grok & Perplexity)</div>
+    <h1>One-Click Chat Switching between <br/><span>Claude, ChatGPT, Gemini, Grok & Perplexity</span></h1>
     <p class="hero-desc">
-      Stop manual copy-pasting. Seamlessly transfer active conversation logs between Claude, Perplexity, Gemini & Grok in a single click. 100% secure.
+      Stop manual copy-pasting. Seamlessly transfer active conversation logs between Claude, ChatGPT, Gemini, Grok & Perplexity in a single click. 100% secure.
     </p>
     <div class="hero-ctas">
       <a href="llm-switcher-extension.zip" class="btn btn-primary">Download Extension (.zip)</a>
@@ -264,9 +265,9 @@
           <h3>Claude</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
-        <div class="demo-card perplexity">
-          <div class="demo-logo">🔍</div>
-          <h3>Perplexity</h3>
+        <div class="demo-card chatgpt">
+          <div class="demo-logo">🤖</div>
+          <h3>ChatGPT</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
         <div class="demo-card gemini">
@@ -277,6 +278,11 @@
         <div class="demo-card grok">
           <div class="demo-logo">𝕏</div>
           <h3>Grok</h3>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
+        </div>
+        <div class="demo-card perplexity">
+          <div class="demo-logo">🔍</div>
+          <h3>Perplexity</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
       </div>

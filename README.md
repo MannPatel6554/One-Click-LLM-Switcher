@@ -1,9 +1,9 @@
-# ⚡ One-Click LLM Switcher (Claude ↔ Perplexity)
+# ⚡ One-Click LLM Switcher (Claude ↔ Perplexity ↔ Gemini ↔ Grok)
 
-> **Claude pe baat ki, Perplexity pe switch karna hai? Ek click karo — baat wahi se shuru hogi.**
+> **Ek AI platform pe baat ki, dusre pe switch karna hai? Ek click karo — baat wahi se shuru hogi.**
 
 [![⚡ LIVE DEMO](https://img.shields.io/badge/⚡%20LIVE%20DEMO-Website-blue?style=flat-square)](http://localhost:4000)
-![Version](https://img.shields.io/badge/version-1.1.0-6c63ff?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.2.0-6c63ff?style=flat-square)
 ![Manifest](https://img.shields.io/badge/Manifest-v3-00d4ff?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
@@ -11,19 +11,23 @@
 
 ## 📦 Changelog
 
-- **v1.1.0:** Focused purely on **Claude** and **Perplexity** support for maximum reliability, complete with a manual "Copy Chat" fallback button.
+- **v1.2.0:** Enabled target redirection & auto-injection for **Claude, Perplexity, Gemini, & Grok**, and scraping for all 5 platforms (including **ChatGPT**).
+- **v1.1.0:** Focused purely on Claude and Perplexity support for maximum reliability, complete with a manual "Copy Chat" fallback button.
 
 ---
 
 ## 🤔 Ye Kya Hai?
 
-Ek Chrome Extension jo aapki **poori conversation** Claude se Perplexity (aur vice-versa) mein **ek click mein** le jaata hai — bina copy-paste ke, bina kuch bhule.
+Ek Chrome Extension jo aapki **poori conversation** ek click mein dusre AI platform mein le jaata hai — bina copy-paste ke, bina kuch bhule.
 
 **Supported AI Platforms:**
 | Platform | Scraping | Injection |
 |----------|----------|-----------|
 | ◆ Claude    | ✅ | ✅ |
 | 🔍 Perplexity| ✅ | ✅ |
+| ✦ Gemini    | ✅ | ✅ |
+| 𝕏 Grok      | ✅ | ✅ |
+| 🤖 ChatGPT   | ✅ | ❌ (Manual clipboard write only) |
 
 ---
 
@@ -51,7 +55,7 @@ cd llm-switcher/extension
 | Problem | Solution |
 |---------|----------|
 | Chat inject nahi ho rahi | Extension popup par click karke manually "Copy Current Chat" kar sakte hain, aur page par Ctrl+V kar dein |
-| Buttons disabled hain | AI chat page pe jaao (claude.ai ya perplexity.ai) |
+| Buttons disabled hain | AI chat page pe jaao (claude.ai, perplexity.ai, gemini.google.com, grok.com, chatgpt.com) |
 | Extension icon nahi dikh raha | chrome://extensions pe jaao, extension enabled hai? |
 
 ---
@@ -59,22 +63,22 @@ cd llm-switcher/extension
 ## ⚙️ Kaise Kaam Karta Hai?
 
 ```text
-User Claude pe hai
+User active AI chat pe hai
         │
         ▼
     [⚡ Icon Click]
         │
         ▼
-  Popup khulta hai → "Perplexity" button click
+  Popup khulta hai → Target button click (e.g. Gemini)
         │
         ▼
   popup.js → Chat scrape karke clipboard mein copy karega (Synchronously)
         │
         ▼
-  background.js → New tab khulega Perplexity ka
+  background.js → New tab khulega target AI ka
         │
         ▼
-  content.js → Perplexity par auto-paste karega
+  content.js → Target AI par auto-paste karega
 ```
 
 ---
@@ -89,7 +93,7 @@ backend/
 extension/
 ├── manifest.json      # Extension ki permissions aur config
 ├── background.js      # Service worker — tab management
-├── content.js         # DOM scraper + injector (Claude & Perplexity)
+├── content.js         # DOM scraper + injector (Claude, Perplexity, Gemini, Grok, ChatGPT)
 ├── popup.html         # Extension ka UI popup
 ├── popup.js           # Button click handlers
 └── icons/
