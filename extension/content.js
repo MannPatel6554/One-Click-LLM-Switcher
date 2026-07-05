@@ -166,6 +166,14 @@
     tryInjectLoop('textarea[placeholder*="Ask" i], textarea[placeholder*="follow-up" i]', text);
   }
 
+  function injectToGemini(text) {
+    tryInjectLoop('div.ql-editor[contenteditable="true"], rich-textarea div[contenteditable="true"]', text, 'rich-textarea');
+  }
+
+  function injectToGrok(text) {
+    tryInjectLoop('div.ProseMirror[contenteditable="true"], div.tiptap[contenteditable="true"]', text);
+  }
+
   // ─── LISTENER — background.js se message sunna ───────────────
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -228,12 +236,16 @@
     
     if (target === 'claude'  && HOSTNAME.includes('claude.ai'))   isCurrentTarget = true;
     if (target === 'perplexity' && HOSTNAME.includes('perplexity.ai')) isCurrentTarget = true;
+    if (target === 'gemini'  && HOSTNAME.includes('gemini.google')) isCurrentTarget = true;
+    if (target === 'grok'    && HOSTNAME.includes('grok.com'))    isCurrentTarget = true;
 
     if (isCurrentTarget) {
       showToast("⚡ LLM Switcher: Chat clipboard me hai! Ctrl+V karein agar auto-paste na ho.");
       
       if (target === 'claude')  injectToClaude(result.pendingChat);
       if (target === 'perplexity') injectToPerplexity(result.pendingChat);
+      if (target === 'gemini')  injectToGemini(result.pendingChat);
+      if (target === 'grok')    injectToGrok(result.pendingChat);
     }
   });
 

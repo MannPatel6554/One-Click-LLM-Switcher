@@ -141,7 +141,7 @@
     }
     .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); }
     .demo-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
     }
     .demo-card {
       background: rgba(255,255,255,0.02);
@@ -152,6 +152,8 @@
     .demo-logo { font-size: 32px; margin-bottom: 12px; }
     .demo-card.claude { border-color: rgba(199, 107, 58, 0.3); }
     .demo-card.perplexity { border-color: rgba(124, 58, 237, 0.3); }
+    .demo-card.gemini { border-color: rgba(26, 115, 232, 0.3); }
+    .demo-card.grok { border-color: rgba(255, 255, 255, 0.2); }
     
     .switch-icon {
       position: absolute; top: 50%; left: 50%;
@@ -164,6 +166,7 @@
       font-size: 20px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.3);
       animation: bounce 2s infinite ease-in-out;
+      z-index: 5;
     }
     @keyframes bounce {
       0%, 100% { transform: translate(-50%, -50%) scale(1); }
@@ -234,14 +237,14 @@
       <li><a href="#setup">Setup Guide</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a href="llm-switcher-extension.zip" class="nav-cta">Download v1.1.0</a>
+    <a href="llm-switcher-extension.zip" class="nav-cta">Download v1.2.0</a>
   </header>
 
   <section class="hero">
-    <div class="badge">v1.1.0 (Claude & Perplexity support)</div>
-    <h1>One-Click Chat Switching between <br/><span>Claude & Perplexity</span></h1>
+    <div class="badge">v1.2.0 (Claude, Perplexity, Gemini & Grok)</div>
+    <h1>One-Click Chat Switching between <br/><span>Claude, Perplexity, Gemini & Grok</span></h1>
     <p class="hero-desc">
-      Stop manual copy-pasting. Seamlessly transfer active conversation logs between Claude.ai and Perplexity.ai in a single click. 100% secure.
+      Stop manual copy-pasting. Seamlessly transfer active conversation logs between Claude, Perplexity, Gemini & Grok in a single click. 100% secure.
     </p>
     <div class="hero-ctas">
       <a href="llm-switcher-extension.zip" class="btn btn-primary">Download Extension (.zip)</a>
@@ -259,12 +262,22 @@
         <div class="demo-card claude">
           <div class="demo-logo">◆</div>
           <h3>Claude</h3>
-          <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">Scraped instantly</p>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
         <div class="demo-card perplexity">
           <div class="demo-logo">🔍</div>
           <h3>Perplexity</h3>
-          <p style="font-size: 12px; color: var(--muted); margin-top: 4px;">Injected automatically</p>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
+        </div>
+        <div class="demo-card gemini">
+          <div class="demo-logo">✦</div>
+          <h3>Gemini</h3>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
+        </div>
+        <div class="demo-card grok">
+          <div class="demo-logo">𝕏</div>
+          <h3>Grok</h3>
+          <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
       </div>
       <div class="switch-icon">⚡</div>
@@ -278,7 +291,7 @@
         <div class="step-card">
           <div class="step-num">1</div>
           <h3>Click Switch</h3>
-          <p>Open the extension popup on any active Claude or Perplexity conversation and choose your target.</p>
+          <p>Open the extension popup on any active conversation and choose your target AI platform.</p>
         </div>
         <div class="step-card">
           <div class="step-num">2</div>
@@ -329,8 +342,8 @@
         <p>We copy the chat history to your clipboard automatically. If the site blocks automatic paste, simply click the text field and press Ctrl+V.</p>
       </div>
       <div class="faq-item">
-        <h3>Why only Claude and Perplexity?</h3>
-        <p>We optimized support for these platforms because they are the most popular for deep text generation and search contexts. Support is highly stable.</p>
+        <h3>Which platforms are supported?</h3>
+        <p>We support full scraping and automated injection for Claude, Perplexity, Gemini, and Grok, plus scraping from ChatGPT.</p>
       </div>
     </div>
   </section>

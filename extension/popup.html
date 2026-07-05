@@ -36,6 +36,8 @@
     #detectedTitle { font-size: 11px; font-weight: bold; margin-top: 2px; }
     .color-claude { color: #c96b3a; }
     .color-perplexity { color: #7c3aed; }
+    .color-gemini { color: #1a73e8; }
+    .color-grok { color: #ffffff; }
     .color-error { color: #ff5555; }
 
     .status-bar {
@@ -104,6 +106,8 @@
 
     .claude   { background: linear-gradient(135deg, #c96b3a, #a3512a); }
     .perplexity { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+    .gemini   { background: linear-gradient(135deg, #1a73e8, #0d5bd4); }
+    .grok     { background: linear-gradient(135deg, #2a2a2a, #111); border: 1px solid #333; }
     .copy-btn { background: linear-gradient(135deg, #6c63ff, #4b40ff); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(108, 99, 255, 0.2); }
 
     .divider {
@@ -174,6 +178,18 @@
   
   <button class="btn perplexity" id="toPerplexity">
     <span class="icon">🔍</span> Perplexity
+    <span class="arrow">→</span>
+    <div class="spinner"></div>
+  </button>
+
+  <button class="btn gemini" id="toGemini">
+    <span class="icon">✦</span> Gemini
+    <span class="arrow">→</span>
+    <div class="spinner"></div>
+  </button>
+
+  <button class="btn grok" id="toGrok">
+    <span class="icon">𝕏</span> Grok
     <span class="arrow">→</span>
     <div class="spinner"></div>
   </button>

@@ -12,7 +12,9 @@ const SUPPORTED_SITES = {
 
 const TARGET_URLS = {
   claude:  'https://claude.ai/new',
-  perplexity: 'https://www.perplexity.ai/'
+  perplexity: 'https://www.perplexity.ai/',
+  gemini:  'https://gemini.google.com/',
+  grok:    'https://grok.com/'
 };
 
 let currentAI = null;
@@ -181,3 +183,5 @@ document.getElementById('copyChatBtn').addEventListener('click', () => {
 // Bind target AI buttons
 document.getElementById('toClaude').addEventListener('click',  () => handleSwitch('claude',  'toClaude'));
 document.getElementById('toPerplexity')?.addEventListener('click', () => handleSwitch('perplexity', 'toPerplexity'));
+document.getElementById('toGemini').addEventListener('click',  () => handleSwitch('gemini',  'toGemini'));
+document.getElementById('toGrok').addEventListener('click',    () => handleSwitch('grok',    'toGrok'));
