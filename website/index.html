@@ -157,13 +157,28 @@
       border: 1px solid var(--border);
       border-radius: 12px; padding: 20px;
       display: flex; flex-direction: column; align-items: center;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0.4;
+      filter: grayscale(60%);
     }
     .demo-logo { font-size: 32px; margin-bottom: 12px; }
-    .demo-card.claude { border-color: rgba(199, 107, 58, 0.3); }
-    .demo-card.perplexity { border-color: rgba(124, 58, 237, 0.3); }
-    .demo-card.gemini { border-color: rgba(26, 115, 232, 0.3); }
-    .demo-card.grok { border-color: rgba(255, 255, 255, 0.2); }
-    .demo-card.chatgpt { border-color: rgba(16, 163, 127, 0.3); }
+    .demo-card.claude { border-color: rgba(199, 107, 58, 0.2); }
+    .demo-card.perplexity { border-color: rgba(124, 58, 237, 0.2); }
+    .demo-card.gemini { border-color: rgba(26, 115, 232, 0.2); }
+    .demo-card.grok { border-color: rgba(255, 255, 255, 0.1); }
+    .demo-card.chatgpt { border-color: rgba(16, 163, 127, 0.2); }
+    
+    .demo-card.active {
+      opacity: 1;
+      filter: grayscale(0%);
+      transform: translateY(-8px);
+      background: rgba(255,255,255,0.04);
+    }
+    .demo-card.active.claude { border-color: var(--claude); box-shadow: 0 0 25px rgba(199, 107, 58, 0.35); }
+    .demo-card.active.perplexity { border-color: var(--perplexity); box-shadow: 0 0 25px rgba(124, 58, 237, 0.35); }
+    .demo-card.active.gemini { border-color: #1a73e8; box-shadow: 0 0 25px rgba(26, 115, 232, 0.35); }
+    .demo-card.active.grok { border-color: #ffffff; box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); }
+    .demo-card.active.chatgpt { border-color: rgba(16, 163, 127, 1); box-shadow: 0 0 25px rgba(16, 163, 127, 0.35); }
     
     .switch-icon {
       position: absolute; top: 50%; left: 50%;
@@ -180,7 +195,15 @@
     }
     @keyframes bounce {
       0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 20px rgba(108, 99, 255, 0.3); }
+      50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 20px rgba(108, 99, 255, 0.2); }
+    }
+    @keyframes pulse-icon {
+      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.5); }
+      70% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 0 15px rgba(108, 99, 255, 0); }
+      100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
+    }
+    .switch-icon.trigger-pulse {
+      animation: pulse-icon 0.8s ease-out;
     }
 
     /* Steps Section */
@@ -370,6 +393,36 @@
       <li><a href="#how-it-works">Docs</a></li>
     </ul>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.demo-card');
+      const switchIcon = document.querySelector('.switch-icon');
+      let currentIndex = 0;
+
+      function cycleCards() {
+        if (!cards.length) return;
+        
+        // Remove active class from all cards
+        cards.forEach(card => card.classList.remove('active'));
+        
+        // Add active class to current card
+        cards[currentIndex].classList.add('active');
+
+        // Trigger pulse on center switch-icon
+        if (switchIcon) {
+          switchIcon.classList.remove('trigger-pulse');
+          void switchIcon.offsetWidth; // trigger reflow
+          switchIcon.classList.add('trigger-pulse');
+        }
+
+        currentIndex = (currentIndex + 1) % cards.length;
+      }
+
+      setInterval(cycleCards, 2200);
+      cycleCards(); // Run first cycle immediately
+    });
+  </script>
 
 </body>
 </html>
