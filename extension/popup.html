@@ -108,6 +108,7 @@
     .perplexity { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
     .gemini   { background: linear-gradient(135deg, #1a73e8, #0d5bd4); }
     .grok     { background: linear-gradient(135deg, #2a2a2a, #111); border: 1px solid #333; }
+    .chatgpt  { background: linear-gradient(135deg, #10a37f, #0b7a5f); }
     .copy-btn { background: linear-gradient(135deg, #6c63ff, #4b40ff); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(108, 99, 255, 0.2); }
 
     .divider {
@@ -178,6 +179,12 @@
   
   <button class="btn perplexity" id="toPerplexity">
     <span class="icon">🔍</span> Perplexity
+    <span class="arrow">→</span>
+    <div class="spinner"></div>
+  </button>
+
+  <button class="btn chatgpt" id="toChatGPT">
+    <span class="icon">🤖</span> ChatGPT
     <span class="arrow">→</span>
     <div class="spinner"></div>
   </button>

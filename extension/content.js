@@ -174,6 +174,10 @@
     tryInjectLoop('div.ProseMirror[contenteditable="true"], div.tiptap[contenteditable="true"]', text);
   }
 
+  function injectToChatGPT(text) {
+    tryInjectLoop('div#prompt-textarea, textarea[placeholder*="message ChatGPT" i]', text);
+  }
+
   // ─── LISTENER — background.js se message sunna ───────────────
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
@@ -238,6 +242,7 @@
     if (target === 'perplexity' && HOSTNAME.includes('perplexity.ai')) isCurrentTarget = true;
     if (target === 'gemini'  && HOSTNAME.includes('gemini.google')) isCurrentTarget = true;
     if (target === 'grok'    && HOSTNAME.includes('grok.com'))    isCurrentTarget = true;
+    if (target === 'chatgpt' && HOSTNAME.includes('chatgpt.com'))  isCurrentTarget = true;
 
     if (isCurrentTarget) {
       showToast("⚡ LLM Switcher: Chat clipboard me hai! Ctrl+V karein agar auto-paste na ho.");
@@ -246,6 +251,7 @@
       if (target === 'perplexity') injectToPerplexity(result.pendingChat);
       if (target === 'gemini')  injectToGemini(result.pendingChat);
       if (target === 'grok')    injectToGrok(result.pendingChat);
+      if (target === 'chatgpt') injectToChatGPT(result.pendingChat);
     }
   });
 
