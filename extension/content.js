@@ -130,10 +130,11 @@
       } catch (e) {}
       
       if (!box.textContent.includes(text.substring(0, 5))) {
-        box.innerHTML = '';
-        const p = document.createElement('p');
-        p.textContent = text;
-        box.appendChild(p);
+        try {
+          box.innerText = text;
+        } catch (e) {
+          box.textContent = text;
+        }
       }
     }
 
@@ -163,7 +164,7 @@
   }
 
   function injectToPerplexity(text) {
-    tryInjectLoop('div#ask-input, #ask-input, textarea[placeholder*="Ask" i], textarea[placeholder*="follow-up" i]', text);
+    tryInjectLoop('textarea[placeholder*="Ask" i], textarea[placeholder*="follow-up" i], #ask-input [contenteditable="true"], [contenteditable="true"]#ask-input, #ask-input', text);
   }
 
   function injectToGemini(text) {
