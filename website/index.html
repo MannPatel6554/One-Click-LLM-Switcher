@@ -179,20 +179,7 @@
       opacity: 0.35;
       filter: grayscale(80%);
     }
-    .demo-logo { 
-      font-size: 32px; 
-      margin-bottom: 12px; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-    }
-    .demo-logo svg {
-      width: 32px;
-      height: 32px;
-      display: block;
-    }
+    .demo-logo { font-size: 32px; margin-bottom: 12px; }
     .demo-card.claude { border-color: rgba(199, 107, 58, 0.2); }
     .demo-card.perplexity { border-color: rgba(124, 58, 237, 0.2); }
     .demo-card.gemini { border-color: rgba(26, 115, 232, 0.2); }
@@ -347,49 +334,27 @@
       </div>
       <div class="demo-grid">
         <div class="demo-card claude">
-          <div class="demo-logo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--claude);">
-              <path d="M4 20L10.5 4.5C11 3.5 12.5 3.5 13 4.5L19.5 20" />
-              <path d="M7 14h9.5" />
-            </svg>
-          </div>
+          <div class="demo-logo">◆</div>
           <h3>Claude</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
         <div class="demo-card chatgpt">
-          <div class="demo-logo">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="color: #10a37f;">
-              <path d="M21.3,10.1 C21.6,9.5 21.7,8.8 21.6,8.1 C21.4,6.9 20.7,5.8 19.6,5.2 C19.1,4.9 18.5,4.8 17.9,4.8 C17.7,3.9 17.2,3.1 16.5,2.6 C15.4,1.8 13.9,1.7 12.7,2.4 C12.2,2.7 11.8,3.1 11.5,3.6 C10.9,3.3 10.2,3.2 9.5,3.3 C8.3,3.5 7.2,4.2 6.6,5.3 C6.3,5.8 6.2,6.4 6.2,7 C5.3,7.2 4.5,7.7 4,8.4 C3.2,9.5 3.1,11 3.8,12.2 C4.1,12.7 4.5,13.1 5,13.4 C4.7,14 4.6,14.7 4.7,15.4 C4.9,16.6 5.6,17.7 6.7,18.3 C7.2,18.6 7.8,18.7 8.4,18.7 C8.6,19.6 9.1,20.4 9.8,20.9 C10.9,21.7 12.4,21.8 13.6,21.1 C14.1,20.8 14.5,20.4 14.8,19.9 C15.4,20.2 16.1,20.3 16.8,20.2 C18,20 19.1,19.3 19.7,18.2 C20,17.7 20.1,17.1 20.1,16.5 C21,16.3 21.8,15.8 22.3,15.1 C23.1,14 23.2,12.5 22.5,11.3 C22.2,10.8 21.8,10.4 21.3,10.1 Z M12.8,3.7 C13.5,3.3 14.3,3.3 15,3.7 C15.5,4 15.8,4.5 15.9,5 C15,5.5 12.8,6.8 12.8,6.8 L12.8,3.7 Z M7.8,6 C8.3,5.1 9.2,4.6 10.1,4.7 C10.6,4.8 11.1,5.1 11.4,5.5 L11.4,8.7 C11.4,8.7 9.2,10 8.3,10.5 L8.3,7.4 C8.3,6.9 8.1,6.4 7.8,6 Z M5.3,11.2 C4.8,10.5 4.8,9.6 5.2,8.9 C5.5,8.4 6,8.1 6.6,8 L6.6,11.2 C6.6,11.2 8.8,9.9 9.7,9.4 L9.7,12.5 L6.8,14.2 C6.3,13.9 5.7,13.2 5.3,11.2 Z M11.2,20.3 C10.5,20.7 9.7,20.7 9,20.3 C8.5,20 8.2,19.5 8.1,19 C9,18.5 11.2,17.2 11.2,17.2 L11.2,20.3 Z M16.2,18 C15.7,18.9 14.8,19.4 13.9,19.3 C13.4,19.2 12.9,18.9 12.6,18.5 L12.6,15.3 C12.6,15.3 14.8,14 15.7,13.5 L15.7,16.6 C15.7,17.1 15.9,17.6 16.2,18 Z M18.7,12.8 C19.2,13.5 19.2,14.4 18.8,15.1 C18.5,15.6 18,15.9 17.4,16 L17.4,12.8 C17.4,12.8 15.2,14.1 14.3,14.6 L14.3,11.5 L17.2,9.8 C17.7,10.1 18.3,10.8 18.7,12.8 Z M10.8,12 L13.3,10.5 L15.8,12 L13.3,13.5 L10.8,12 Z"/>
-            </svg>
-          </div>
+          <div class="demo-logo">🤖</div>
           <h3>ChatGPT</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
         <div class="demo-card gemini">
-          <div class="demo-logo">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="color: #1a73e8;">
-              <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z" />
-            </svg>
-          </div>
+          <div class="demo-logo">✦</div>
           <h3>Gemini</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
         <div class="demo-card grok">
-          <div class="demo-logo">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="color: #ffffff;">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </div>
+          <div class="demo-logo">𝕏</div>
           <h3>Grok</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
         <div class="demo-card perplexity">
-          <div class="demo-logo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--perplexity);">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </div>
+          <div class="demo-logo">🔍</div>
           <h3>Perplexity</h3>
           <p style="font-size: 11px; color: var(--muted); margin-top: 4px;">Scraped & Injected</p>
         </div>
