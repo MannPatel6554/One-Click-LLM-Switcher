@@ -220,8 +220,10 @@
     }
     
     .switch-icon {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+      position: absolute; 
+      bottom: -22px; 
+      left: 50%;
+      transform: translateX(-50%);
       width: 44px; height: 44px;
       background: #1e1e2d;
       border: 1px solid var(--border);
@@ -235,13 +237,13 @@
       transition: all 0.5s ease;
     }
     @keyframes bounce {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 20px rgba(108, 99, 255, 0.2); }
+      0%, 100% { transform: translate(-50%, 0) scale(1); }
+      50% { transform: translate(-50%, -6px) scale(1.08); box-shadow: 0 0 20px rgba(108, 99, 255, 0.2); }
     }
     @keyframes pulse-icon {
-      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.5); }
-      70% { transform: translate(-50%, -50%) scale(1.2); box-shadow: 0 0 0 15px rgba(108, 99, 255, 0); }
-      100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
+      0% { transform: translate(-50%, 0) scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.5); }
+      70% { transform: translate(-50%, 0) scale(1.2); box-shadow: 0 0 0 15px rgba(108, 99, 255, 0); }
+      100% { transform: translate(-50%, 0) scale(1); box-shadow: 0 0 0 0 rgba(108, 99, 255, 0); }
     }
     .switch-icon.trigger-pulse {
       animation: pulse-icon 0.8s ease-out;
