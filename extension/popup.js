@@ -100,9 +100,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
       setStatus('Could not initialize scraper on this page.', 'error');
     }
   } else {
-    detectedTitle.textContent = `⚠ AI site pe nahi hain`;
+    detectedTitle.textContent = `⚠ Not on supported AI page`;
     detectedTitle.className = 'color-error';
-    setStatus('AI chat page pe jaao phir switch karo', 'error');
+    setStatus('Please open a supported AI chat page first.', 'error');
     document.querySelectorAll('.btn').forEach(btn => { btn.disabled = true; });
   }
 });
@@ -130,7 +130,7 @@ function handleSwitch(targetId, btnId) {
   setButtonLoading(btn, true);
 
   if (!activeChatText) {
-    setStatus('Pehle chat load hone dein (1 second wait karein)', 'error');
+    setStatus('Please wait for the chat to load (around 1 second).', 'error');
     setButtonLoading(btn, false);
     return;
   }

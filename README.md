@@ -1,6 +1,6 @@
 # ⚡ One-Click LLM Switcher (Claude ↔ Perplexity ↔ ChatGPT ↔ Gemini ↔ Grok)
 
-> **Ek AI platform pe baat ki, dusre pe switch karna hai? Ek click karo — baat wahi se shuru hogi.**
+> **Talking to one AI platform but want to switch to another? Click once — and pick up right where you left off.**
 
 [![⚡ LIVE DEMO](https://img.shields.io/badge/⚡%20LIVE%20DEMO-Website-blue?style=flat-square)](http://localhost:4000)
 ![Version](https://img.shields.io/badge/version-1.0.0-6c63ff?style=flat-square)
@@ -15,9 +15,9 @@
 
 ---
 
-## 🤔 Ye Kya Hai?
+## 🤔 What Is This?
 
-Ek Chrome Extension jo aapki **poori conversation** ek click mein dusre AI platform mein le jaata hai — bina copy-paste ke, bina kuch bhule.
+A Chrome Extension that transfers your **entire active conversation thread** to another AI platform in a single click — without manual copying and pasting or losing context.
 
 **Supported AI Platforms:**
 | Platform | Scraping | Injection |
@@ -33,51 +33,51 @@ Ek Chrome Extension jo aapki **poori conversation** ek click mein dusre AI platf
 ## 🚀 Quick Install (Developer Mode)
 
 ```bash
-# 1. Repo clone karo
+# 1. Clone the repository
 git clone https://github.com/yourname/llm-switcher.git
 cd llm-switcher/extension
 
-# 2. Chrome mein jaao
+# 2. Open Google Chrome and navigate to:
 # chrome://extensions/
 
-# 3. "Developer Mode" ON karo (top-right toggle)
+# 3. Enable "Developer Mode" (toggle in the top-right corner)
 
-# 4. "Load Unpacked" pe click karo aur /extension folder select karo
+# 4. Click "Load Unpacked" and select the /extension directory
 
-# 5. Extension tray mein ⚡ icon aajayega!
+# 5. The ⚡ icon will appear in your extension tray!
 ```
 
 ---
 
 ## 🔧 Troubleshooting
    
-| Problem | Solution |
-|---------|----------|
-| Chat inject nahi ho rahi | Extension popup par click karke manually "Copy Current Chat" kar sakte hain, aur page par Ctrl+V kar dein |
-| Buttons disabled hain | AI chat page pe jaao (claude.ai, perplexity.ai, gemini.google.com, grok.com, chatgpt.com) |
-| Extension icon nahi dikh raha | chrome://extensions pe jaao, extension enabled hai? |
+| Issue | Solution |
+|-------|----------|
+| Chat doesn't inject automatically | Click the extension popup and manually select "Copy Current Chat", then press Ctrl+V inside the input field |
+| Buttons are disabled | Make sure you are on a supported active chat page (claude.ai, perplexity.ai, gemini.google.com, grok.com, chatgpt.com) |
+| Extension icon doesn't appear | Go to chrome://extensions and verify that the extension toggle is active |
 
 ---
 
-## ⚙️ Kaise Kaam Karta Hai?
+## ⚙️ How It Works
 
 ```text
-User active AI chat pe hai
+User is on an active AI chat thread
         │
         ▼
-    [⚡ Icon Click]
+    [⚡ Click Extension Icon]
         │
         ▼
-  Popup khulta hai → Target button click (e.g. Gemini)
+  Popup opens → Select target AI (e.g., Gemini)
         │
         ▼
-  popup.js → Chat scrape karke clipboard mein copy karega (Synchronously)
+  popup.js → Scrapes active thread and writes to clipboard (Synchronously)
         │
         ▼
-  background.js → New tab khulega target AI ka
+  background.js → Opens new tab with the target AI URL
         │
         ▼
-  content.js → Target AI par auto-paste karega
+  content.js → Automates key input injection into the target input field
 ```
 
 ---
@@ -86,30 +86,30 @@ User active AI chat pe hai
 
 ```text
 backend/
-├── schema.sql         # Supabase SQL Schema
-├── supabase_client.js # Supabase client implementation
+├── schema.sql         # Supabase database schema definition
+├── supabase_client.js # Supabase connection client implementation
 
 extension/
-├── manifest.json      # Extension ki permissions aur config
-├── background.js      # Service worker — tab management
-├── content.js         # DOM scraper + injector (Claude, Perplexity, Gemini, Grok, ChatGPT)
-├── popup.html         # Extension ka UI popup
-├── popup.js           # Button click handlers
+├── manifest.json      # Extension config, permissions, & metadata
+├── background.js      # Service worker handling tab/navigation states
+├── content.js         # DOM scraper & target injector modules
+├── popup.html         # Premium glassmorphic extension UI popup
+├── popup.js           # UI interaction & event listeners
 └── icons/
-    ├── icon16.png
+    ├── icon16.png     # Resized extension vector icons
     ├── icon48.png
     └── icon128.png
 
 website/
-├── index.html         # Landing page
-└── llm-switcher-extension.zip # Compiled package
+├── index.html         # Interactive landing page mockup
+└── llm-switcher-extension.zip # Production extension package
 ```
 
 ---
 
 ## 📄 License
 
-MIT — Karo jo chahein, bas credit dena mat bhulio! 😄
+MIT — Feel free to use, modify, and distribute, just don't forget to give credit! 😄
 
 ---
 

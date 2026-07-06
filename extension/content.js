@@ -246,7 +246,7 @@
     if (target === 'chatgpt' && HOSTNAME.includes('chatgpt.com'))  isCurrentTarget = true;
 
     if (isCurrentTarget) {
-      showToast("⚡ LLM Switcher: Chat clipboard me hai! Ctrl+V karein agar auto-paste na ho.");
+      showToast("⚡ LLM Switcher: Chat copied to clipboard! Press Ctrl+V if auto-paste doesn't trigger.");
       
       if (target === 'claude')  injectToClaude(result.pendingChat);
       if (target === 'perplexity') injectToPerplexity(result.pendingChat);
