@@ -4,71 +4,113 @@
   <meta charset="UTF-8" />
   <title>LLM Switcher</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+    
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      width: 260px;
-      background: #0f0f13;
-      color: #f0f0f0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      padding: 16px;
-      border-radius: 12px;
+      width: 270px;
+      background: #07070c;
+      color: #f5f5f7;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient background glow */
+    .popup-glow {
+      position: absolute;
+      top: -30px; left: 50%;
+      transform: translateX(-50%);
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.18) 0%, transparent 70%);
+      filter: blur(25px);
+      z-index: -1;
+      pointer-events: none;
     }
 
     .header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
+      gap: 10px;
+      margin-bottom: 16px;
+      position: relative;
     }
 
     .logo {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, #6c63ff, #00d4ff);
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
+      display: block;
+      box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25);
+      animation: pulse-glow 2.5s infinite ease-in-out;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(108, 99, 255, 0.2)); }
+      50% { transform: scale(1.05); filter: drop-shadow(0 0 10px rgba(108, 99, 255, 0.5)); }
     }
 
-    .title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: #e0e0e0; }
+    .title { 
+      font-size: 13px; 
+      font-weight: 700; 
+      letter-spacing: 1px; 
+      color: #ffffff; 
+      background: linear-gradient(135deg, #ffffff, #8b8b9a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
     
-    #detectedTitle { font-size: 11px; font-weight: bold; margin-top: 2px; }
+    #detectedTitle { font-size: 11px; font-weight: 600; margin-top: 1px; }
     .color-claude { color: #c96b3a; }
-    .color-perplexity { color: #7c3aed; }
-    .color-gemini { color: #1a73e8; }
+    .color-perplexity { color: #a78bfa; }
+    .color-gemini { color: #60a5fa; }
     .color-grok { color: #ffffff; }
-    .color-error { color: #ff5555; }
+    .color-error { color: #f87171; }
 
     .status-bar {
-      background: #1a1a22;
-      border-radius: 8px;
-      padding: 8px 10px;
-      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
       font-size: 11px;
-      color: #888;
-      min-height: 32px;
+      color: #8b8b9a;
+      min-height: 36px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      transition: all 0.3s ease;
     }
 
     .status-dot {
-      width: 6px; height: 6px;
+      width: 7px; height: 7px;
       border-radius: 50%;
-      background: #444;
+      background: #33333f;
       flex-shrink: 0;
+      transition: all 0.3s ease;
     }
-    .status-dot.active { background: #00d4aa; box-shadow: 0 0 6px #00d4aa88; }
-    .status-dot.error  { background: #ff5555; }
+    .status-dot.active { 
+      background: #10a37f; 
+      box-shadow: 0 0 10px #10a37f; 
+      animation: status-pulse 1.5s infinite alternate;
+    }
+    .status-dot.error { 
+      background: #ef4444; 
+      box-shadow: 0 0 10px #ef4444; 
+    }
+    @keyframes status-pulse {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
 
     .label {
       font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: #555;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #4b5563;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .btn {
@@ -76,66 +118,96 @@
       align-items: center;
       gap: 10px;
       width: 100%;
-      margin-bottom: 6px;
-      padding: 9px 12px;
-      border: none;
-      border-radius: 8px;
+      margin-bottom: 8px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 10px;
       color: white;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.1s, opacity 0.1s, box-shadow 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-align: left;
       position: relative;
       overflow: hidden;
     }
 
-    .btn:hover  { transform: translateX(2px); opacity: 0.92; }
-    .btn:active { transform: scale(0.97); }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn:active { 
+      transform: translateY(0) scale(0.98); 
+    }
 
     .btn:disabled {
-      opacity: 0.4;
+      opacity: 0.25;
       cursor: not-allowed;
       transform: none;
+      box-shadow: none !important;
     }
 
     .btn.hidden-btn { display: none; }
 
-    .btn .icon { font-size: 16px; width: 20px; text-align: center; }
-    .btn .arrow { margin-left: auto; opacity: 0.6; font-size: 11px; }
+    .btn .icon { font-size: 15px; width: 20px; text-align: center; }
+    .btn .arrow { 
+      margin-left: auto; 
+      opacity: 0.6; 
+      font-size: 11px; 
+      transition: transform 0.3s ease;
+    }
+    .btn:hover .arrow {
+      transform: translateX(3px);
+    }
 
-    .claude   { background: linear-gradient(135deg, #c96b3a, #a3512a); }
+    .claude { background: linear-gradient(135deg, #c96b3a, #9c4c23); }
+    .claude:hover { box-shadow: 0 4px 15px rgba(199, 107, 58, 0.4); }
+
     .perplexity { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
-    .gemini   { background: linear-gradient(135deg, #1a73e8, #0d5bd4); }
-    .grok     { background: linear-gradient(135deg, #2a2a2a, #111); border: 1px solid #333; }
-    .chatgpt  { background: linear-gradient(135deg, #10a37f, #0b7a5f); }
-    .copy-btn { background: linear-gradient(135deg, #6c63ff, #4b40ff); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(108, 99, 255, 0.2); }
+    .perplexity:hover { box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
+
+    .gemini { background: linear-gradient(135deg, #1a73e8, #0c50b6); }
+    .gemini:hover { box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4); }
+
+    .grok { background: linear-gradient(135deg, #1e1e24, #0b0b0d); border: 1px solid rgba(255,255,255,0.06); }
+    .grok:hover { box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15); border-color: rgba(255,255,255,0.15); }
+
+    .chatgpt { background: linear-gradient(135deg, #10a37f, #0c755c); }
+    .chatgpt:hover { box-shadow: 0 4px 15px rgba(16, 163, 127, 0.4); }
+
+    .copy-btn { 
+      background: linear-gradient(135deg, #6c63ff, #4b40ff); 
+      border: 1px solid rgba(255,255,255,0.1); 
+    }
+    .copy-btn:hover {
+      box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+    }
 
     .divider {
       height: 1px;
-      background: #1e1e28;
-      margin: 10px 0;
+      background: rgba(255,255,255,0.06);
+      margin: 12px 0;
     }
 
     .history-text {
-      font-size: 9px;
-      color: #888;
+      font-size: 10px;
+      color: #6b7280;
       text-align: center;
       margin-top: 8px;
     }
 
     .footer {
       font-size: 9px;
-      color: #3a3a4a;
+      color: #374151;
       text-align: center;
       margin-top: 10px;
+      letter-spacing: 0.5px;
     }
 
     .spinner {
       display: none;
-      width: 10px; height: 10px;
-      border: 2px solid #444;
-      border-top-color: #00d4ff;
+      width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-top-color: #ffffff;
       border-radius: 50%;
       animation: spin 0.6s linear infinite;
       margin-left: auto;
@@ -148,8 +220,10 @@
 </head>
 <body>
 
+  <div class="popup-glow"></div>
+
   <div class="header">
-    <div class="logo">⚡</div>
+    <img class="logo" src="icons/icon128.png" alt="logo" />
     <div>
       <div class="title">LLM SWITCHER</div>
       <div id="detectedTitle" class="">Detecting...</div>
