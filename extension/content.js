@@ -163,7 +163,7 @@
   }
 
   function injectToPerplexity(text) {
-    tryInjectLoop('textarea[placeholder*="Ask" i], textarea[placeholder*="follow-up" i]', text);
+    tryInjectLoop('div#ask-input, #ask-input, textarea[placeholder*="Ask" i], textarea[placeholder*="follow-up" i]', text);
   }
 
   function injectToGemini(text) {
