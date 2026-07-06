@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "One-Click LLM Switcher",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Switch your active chats to Claude or Perplexity in one click. Zero server. No data loss.",
   "permissions": [
     "storage",

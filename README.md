@@ -1,9 +1,9 @@
-# ⚡ One-Click LLM Switcher (Claude ↔ Perplexity ↔ Gemini ↔ Grok)
+# ⚡ One-Click LLM Switcher (Claude ↔ Perplexity ↔ ChatGPT ↔ Gemini ↔ Grok)
 
 > **Ek AI platform pe baat ki, dusre pe switch karna hai? Ek click karo — baat wahi se shuru hogi.**
 
 [![⚡ LIVE DEMO](https://img.shields.io/badge/⚡%20LIVE%20DEMO-Website-blue?style=flat-square)](http://localhost:4000)
-![Version](https://img.shields.io/badge/version-1.2.0-6c63ff?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.0.0-6c63ff?style=flat-square)
 ![Manifest](https://img.shields.io/badge/Manifest-v3-00d4ff?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
 
@@ -11,8 +11,7 @@
 
 ## 📦 Changelog
 
-- **v1.2.0:** Enabled target redirection & auto-injection for **Claude, Perplexity, Gemini, & Grok**, and scraping for all 5 platforms (including **ChatGPT**).
-- **v1.1.0:** Focused purely on Claude and Perplexity support for maximum reliability, complete with a manual "Copy Chat" fallback button.
+- **v1.0.0:** Enabled target redirection & auto-injection for **Claude, ChatGPT, Gemini, Grok, & Perplexity** (Full 5-way switching in any direction).
 
 ---
 
@@ -25,9 +24,9 @@ Ek Chrome Extension jo aapki **poori conversation** ek click mein dusre AI platf
 |----------|----------|-----------|
 | ◆ Claude    | ✅ | ✅ |
 | 🔍 Perplexity| ✅ | ✅ |
+| 🤖 ChatGPT   | ✅ | ✅ |
 | ✦ Gemini    | ✅ | ✅ |
 | 𝕏 Grok      | ✅ | ✅ |
-| 🤖 ChatGPT   | ✅ | ❌ (Manual clipboard write only) |
 
 ---
 

@@ -249,6 +249,68 @@
       animation: pulse-icon 0.8s ease-out;
     }
 
+    /* Features Section */
+    .features {
+      padding: 100px 8vw;
+      background: transparent;
+      position: relative;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 10% 10%, rgba(108, 99, 255, 0.08) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(108, 99, 255, 0.2);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      font-size: 24px;
+      margin-bottom: 20px;
+      background: rgba(108, 99, 255, 0.08);
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
     /* Steps Section */
     .steps {
       padding: 100px 8vw;
@@ -309,15 +371,16 @@
   <header>
     <a href="#" class="logo">⚡ <span>LLM Switcher</span></a>
     <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
       <li><a href="#how-it-works">How It Works</a></li>
       <li><a href="#setup">Setup Guide</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a href="llm-switcher-extension.zip" class="nav-cta">Download v1.2.0</a>
+    <a href="llm-switcher-extension.zip" class="nav-cta">Download v1.0.0</a>
   </header>
 
   <section class="hero">
-    <div class="badge">v1.2.0 (Claude, ChatGPT, Gemini, Grok & Perplexity)</div>
+    <div class="badge">v1.0.0 (Claude, ChatGPT, Gemini, Grok & Perplexity)</div>
     <h1>One-Click Chat Switching between <br/><span>Claude, ChatGPT, Gemini, Grok & Perplexity</span></h1>
     <p class="hero-desc">
       Stop manual copy-pasting. Seamlessly transfer active conversation logs between Claude, ChatGPT, Gemini, Grok & Perplexity in a single click. 100% secure.
@@ -362,6 +425,44 @@
         </div>
       </div>
       <div class="switch-icon">⚡</div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="steps-container">
+      <h2 class="section-title">Key Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>5-Way Chat Switching</h3>
+          <p>Seamlessly transfer active threads between Claude, ChatGPT, Gemini, Grok, and Perplexity in any direction.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Full Thread Scraping</h3>
+          <p>Extracts prompt queries and assistant replies cleanly, preserving formatting without clutter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>React-Safe Injection</h3>
+          <p>Automatically handles DOM targeting and React state bindings for instant auto-paste functionality.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3>100% Secure & Local</h3>
+          <p>No backend servers, no tracking, and no credentials needed. All operations run directly in your browser.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3>Clipboard Backup</h3>
+          <p>Automatically keeps your thread copied in the clipboard as a fallback for strict browser sandboxing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Instant Hotkeys</h3>
+          <p>Fast popup menu and responsive UI shortcuts make shifting between AIs feel completely natural.</p>
+        </div>
+      </div>
     </div>
   </section>
 
