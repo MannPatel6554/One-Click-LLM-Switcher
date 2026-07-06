@@ -56,16 +56,25 @@
       top: 20vw; right: -10vw;
     }
 
-    /* Header/Navbar */
     header {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 70px;
-      background: rgba(7, 7, 10, 0.7);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 8vw;
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1100px;
+      height: 60px;
+      background: rgba(14, 14, 20, 0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
       z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .logo {
       font-weight: 700; font-size: 20px;
