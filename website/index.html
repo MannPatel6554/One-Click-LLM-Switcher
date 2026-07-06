@@ -144,7 +144,25 @@
       padding: 24px; margin-top: 60px;
       box-shadow: 0 30px 60px rgba(0,0,0,0.5);
       position: relative;
+      z-index: 1;
     }
+    
+    /* Ambient organic backing glow */
+    .demo-preview::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%; height: 80%;
+      background: var(--active-glow-color, rgba(108, 99, 255, 0.15));
+      filter: blur(80px);
+      z-index: -1;
+      transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      border-radius: 50%;
+      opacity: 0.55;
+    }
+
     .window-header {
       display: flex; gap: 6px; margin-bottom: 20px;
     }
@@ -158,8 +176,8 @@
       border-radius: 12px; padding: 20px;
       display: flex; flex-direction: column; align-items: center;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0.4;
-      filter: grayscale(60%);
+      opacity: 0.35;
+      filter: grayscale(80%);
     }
     .demo-logo { font-size: 32px; margin-bottom: 12px; }
     .demo-card.claude { border-color: rgba(199, 107, 58, 0.2); }
@@ -172,13 +190,34 @@
       opacity: 1;
       filter: grayscale(0%);
       transform: translateY(-8px);
-      background: rgba(255,255,255,0.04);
     }
-    .demo-card.active.claude { border-color: var(--claude); box-shadow: 0 0 25px rgba(199, 107, 58, 0.35); }
-    .demo-card.active.perplexity { border-color: var(--perplexity); box-shadow: 0 0 25px rgba(124, 58, 237, 0.35); }
-    .demo-card.active.gemini { border-color: #1a73e8; box-shadow: 0 0 25px rgba(26, 115, 232, 0.35); }
-    .demo-card.active.grok { border-color: #ffffff; box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); }
-    .demo-card.active.chatgpt { border-color: rgba(16, 163, 127, 1); box-shadow: 0 0 25px rgba(16, 163, 127, 0.35); }
+    
+    /* Radial gradient interior glows matching platform colors */
+    .demo-card.active.claude { 
+      border-color: var(--claude); 
+      box-shadow: 0 0 25px rgba(199, 107, 58, 0.35); 
+      background: radial-gradient(circle at center, rgba(199, 107, 58, 0.08) 0%, rgba(255,255,255,0.01) 80%);
+    }
+    .demo-card.active.perplexity { 
+      border-color: var(--perplexity); 
+      box-shadow: 0 0 25px rgba(124, 58, 237, 0.35); 
+      background: radial-gradient(circle at center, rgba(124, 58, 237, 0.08) 0%, rgba(255,255,255,0.01) 80%);
+    }
+    .demo-card.active.gemini { 
+      border-color: #1a73e8; 
+      box-shadow: 0 0 25px rgba(26, 115, 232, 0.35); 
+      background: radial-gradient(circle at center, rgba(26, 115, 232, 0.08) 0%, rgba(255,255,255,0.01) 80%);
+    }
+    .demo-card.active.grok { 
+      border-color: #ffffff; 
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.25); 
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(255,255,255,0.01) 80%);
+    }
+    .demo-card.active.chatgpt { 
+      border-color: rgba(16, 163, 127, 1); 
+      box-shadow: 0 0 25px rgba(16, 163, 127, 0.35); 
+      background: radial-gradient(circle at center, rgba(16, 163, 127, 0.08) 0%, rgba(255,255,255,0.01) 80%);
+    }
     
     .switch-icon {
       position: absolute; top: 50%; left: 50%;
@@ -189,9 +228,11 @@
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      color: var(--active-brand-color, #6c63ff);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 15px rgba(108, 99, 255, 0.05);
       animation: bounce 2s infinite ease-in-out;
       z-index: 5;
+      transition: all 0.5s ease;
     }
     @keyframes bounce {
       0%, 100% { transform: translate(-50%, -50%) scale(1); }
@@ -398,7 +439,18 @@
     document.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('.demo-card');
       const switchIcon = document.querySelector('.switch-icon');
+      const preview = document.querySelector('.demo-preview');
       let currentIndex = 0;
+
+      // Platform specific active colors & glow strengths
+      const brandColors = ['#c96b3a', '#10a37f', '#1a73e8', '#ffffff', '#7c3aed'];
+      const glowColors = [
+        'rgba(199, 107, 58, 0.22)',  // Claude
+        'rgba(16, 163, 127, 0.22)',  // ChatGPT
+        'rgba(26, 115, 232, 0.22)',  // Gemini
+        'rgba(255, 255, 255, 0.12)', // Grok
+        'rgba(124, 58, 237, 0.22)'   // Perplexity
+      ];
 
       function cycleCards() {
         if (!cards.length) return;
@@ -409,8 +461,14 @@
         // Add active class to current card
         cards[currentIndex].classList.add('active');
 
+        // Update backing organic glow color smoothly
+        if (preview) {
+          preview.style.setProperty('--active-glow-color', glowColors[currentIndex]);
+        }
+
         // Trigger pulse on center switch-icon
         if (switchIcon) {
+          switchIcon.style.setProperty('--active-brand-color', brandColors[currentIndex]);
           switchIcon.classList.remove('trigger-pulse');
           void switchIcon.offsetWidth; // trigger reflow
           switchIcon.classList.add('trigger-pulse');
